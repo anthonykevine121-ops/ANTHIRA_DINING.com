@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANTHIRA DINING | Fine Dining in Lagos</title>
+  <meta name="description" content="Discover ANTHIRA DINING in Victoria Island, Lagos. Enjoy thoughtfully crafted dishes, explore our menu, and reserve a table for an unforgettable dining experience.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#070707">
+  <link rel="canonical" href="https://anthira.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://anthira.com/">
+  <meta property="og:title" content="ANTHIRA DINING | Fine Dining in Lagos">
+  <meta property="og:description" content="Discover ANTHIRA DINING in Victoria Island, Lagos. Explore our menu and reserve a table for an unforgettable dining experience.">
+  <meta property="og:site_name" content="ANTHIRA DINING">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ANTHIRA DINING | Fine Dining in Lagos">
+  <meta name="twitter:description" content="Discover ANTHIRA DINING in Victoria Island, Lagos. Explore our menu and reserve a table for an unforgettable dining experience.">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            orangeBrand: '#f47b16',
+            dark: '#070707',
+            card: '#151515'
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#070707; }
+    .texture {
+      background-color:#070707;
+      background-image:
+        radial-gradient(rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size: 4px 4px;
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 70% 45%, rgba(244,123,22,.13), transparent 35%);
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all .8s ease;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .dish-card img { transition: transform .6s ease; }
+    .dish-card:hover img { transform: scale(1.07) rotate(1deg); }
+    .nav-scrolled {
+      background: rgba(7,7,7,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #222;
+    }
+    .modal {
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+    }
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (max-width: 767px) {
+      body { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+      #cartButton { bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
+      .mobile-bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+        background: rgba(7,7,7,.96);
+        backdrop-filter: blur(14px);
+        border-top: 1px solid rgba(255,255,255,.1);
+      }
+    }
+  </style>
+</head>
+
+<body class="text-white font-sans">
+
+  <!-- NAVBAR -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2 font-display text-1xl tracking-wide">
+        <img src="34.jpeg" alt="" class="h-10 w-10 object-contain">
+        <span>ANTHIRA DINING</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm text-white/80">
+        <a class="nav-link hover:text-orangeBrand transition" href="#home">Home</a>
+        <a class="nav-link hover:text-orangeBrand transition" href="#menu">Menu</a>
+        <a class="nav-link hover:text-orangeBrand transition" href="#about">About Us</a>
+        <a class="nav-link hover:text-orangeBrand transition" href="#gallery">Gallery</a>
+        <a class="nav-link hover:text-orangeBrand transition" href="#contact">Contact</a>
+      </nav>
+
+      <button onclick="openReservation()" class="hidden sm:flex bg-orangeBrand hover:bg-orange-500 px-5 py-3 rounded-full items-center gap-3 text-sm font-semibold transition hover:scale-105">
+        Order Now <span class="text-lg">↗</span>
+      </button>
+
+      <button id="menuBtn" class="md:hidden text-2xl" aria-label="Open menu">☰</button>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobileMenu" class="hidden md:hidden bg-black/95 border-t border-white/10 px-6 py-5">
+      <div class="flex flex-col gap-5 text-white/80">
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About Us</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+        <button onclick="openReservation()" class="bg-orangeBrand rounded-full py-3 text-white">Reserve a Table</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="home" class="texture min-h-screen relative overflow-hidden hero-glow">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-32 pb-20 min-h-screen flex items-center">
+      <div class="grid lg:grid-cols-2 gap-10 items-center w-full">
+
+        <div class="reveal">
+          <p class="uppercase tracking-[.35em] text-orangeBrand text-xs mb-6">Fine dining experience</p>
+
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[.96]">
+            Savor Every<br>
+            Moment with<br>
+            <span class="text-orangeBrand">Every Bite</span>
+          </h1>
+
+          <p class="mt-7 max-w-lg text-white/60 leading-7">
+            Experience gourmet dining crafted with passion, fresh ingredients,
+            and unforgettable flavors.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mt-8">
+            <button onclick="openReservation()" class="bg-orangeBrand hover:bg-orange-500 px-6 py-4 rounded-full font-semibold transition hover:scale-105">
+              Reserve Your Table ↗
+            </button>
+            <a href="#menu" class="border border-white/20 hover:border-orangeBrand px-6 py-4 rounded-full transition">
+              Explore Menu
+            </a>
+          </div>
+        </div>
+
+        <div class="relative reveal">
+          <div class="absolute -inset-10 bg-orangeBrand/10 blur-3xl rounded-full"></div>
+          <img
+            class="relative w-full max-w-xl mx-auto rounded-[40px] object-cover aspect-square shadow-2xl"
+            src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=90"
+            alt="Luxury restaurant dish"
+          />
+
+          <div class="absolute left-2 bottom-5 sm:left-0 sm:bottom-8 bg-black/90 backdrop-blur border border-white/10 rounded-2xl p-5 w-72">
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <span class="text-xl">★</span>
+                <div><b>Special Events</b><p class="text-xs text-white/50">Let us bring luxury to your special event.</p></div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-xl">♨</span>
+                <div><b>Chef's Experience</b><p class="text-xs text-white/50">Enjoy a front-row seat to culinary excellence.</p></div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-xl">●</span>
+                <div><b>Signature Dishes</b><p class="text-xs text-white/50">Crispy, saucy and unforgettable.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FEATURED DISHES -->
+  <section id="menu" class="bg-black py-24">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+      <div class="reveal flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <p class="text-orangeBrand uppercase tracking-[.3em] text-xs mb-4">Our menu</p>
+          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl">Indulge in<br>Culinary Artistry</h2>
+        </div>
+        <p class="max-w-md text-white/50">
+          Explore our finest selections, crafted to perfection by world-class chefs.
+        </p>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="reveal flex flex-wrap gap-3 mb-10">
+        <button class="filter-btn active px-5 py-2 rounded-full border border-orangeBrand bg-orangeBrand text-sm" data-filter="all">All</button>
+        <button class="filter-btn px-5 py-2 rounded-full border border-white/15 text-sm" data-filter="main">Main</button>
+        <button class="filter-btn px-5 py-2 rounded-full border border-white/15 text-sm" data-filter="pasta">Pasta</button>
+        <button class="filter-btn px-5 py-2 rounded-full border border-white/15 text-sm" data-filter="dessert">Dessert</button>
+      </div>
+
+      <div id="dishGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <article class="dish-card reveal group rounded-3xl bg-card border border-white/5 overflow-hidden p-4" data-category="pasta">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=800&q=85" alt="Truffle pasta">
+          </div>
+          <div class="flex justify-between items-end pt-5">
+            <div>
+              <h3 class="font-display text-2xl">Truffle Pasta</h3>
+              <p class="text-sm text-white/40 mt-1">Cream • Parmesan • Truffle</p>
+            </div>
+            <span class="text-orangeBrand font-semibold">$65</span>
+          </div>
+          <button class="add-cart mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-orangeBrand transition" data-name="Truffle Pasta" data-price="65">Add to Order</button>
+        </article>
+
+        <article class="dish-card reveal group rounded-3xl bg-card border border-white/5 overflow-hidden p-4" data-category="main">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=85" alt="Grilled steak">
+          </div>
+          <div class="flex justify-between items-end pt-5">
+            <div>
+              <h3 class="font-display text-2xl">Grilled Ribeye</h3>
+              <p class="text-sm text-white/40 mt-1">Herb butter • Vegetables</p>
+            </div>
+            <span class="text-orangeBrand font-semibold">$85</span>
+          </div>
+          <button class="add-cart mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-orangeBrand transition" data-name="Grilled Ribeye" data-price="85">Add to Order</button>
+        </article>
+
+        <article class="dish-card reveal group rounded-3xl bg-card border border-white/5 overflow-hidden p-4" data-category="dessert">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=85" alt="Chocolate cake">
+          </div>
+          <div class="flex justify-between items-end pt-5">
+            <div>
+              <h3 class="font-display text-2xl">Chocolate Cake</h3>
+              <p class="text-sm text-white/40 mt-1">Dark chocolate • Cream</p>
+            </div>
+            <span class="text-orangeBrand font-semibold">$35</span>
+          </div>
+          <button class="add-cart mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-orangeBrand transition" data-name="Chocolate Cake" data-price="35">Add to Order</button>
+        </article>
+
+        <article class="dish-card reveal group rounded-3xl bg-card border border-white/5 overflow-hidden p-4" data-category="main">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=85" alt="Seafood bowl">
+          </div>
+          <div class="flex justify-between items-end pt-5">
+            <div>
+              <h3 class="font-display text-2xl">Seafood Risotto</h3>
+              <p class="text-sm text-white/40 mt-1">Seafood • Saffron • Parmesan</p>
+            </div>
+            <span class="text-orangeBrand font-semibold">$90</span>
+          </div>
+          <button class="add-cart mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-orangeBrand transition" data-name="Seafood Risotto" data-price="90">Add to Order</button>
+        </article>
+
+        <article class="dish-card reveal group rounded-3xl bg-card border border-white/5 overflow-hidden p-4" data-category="pasta">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=800&q=85" alt="Pasta dish">
+          </div>
+          <div class="flex justify-between items-end pt-5">
+            <div>
+              <h3 class="font-display text-2xl">Creamy Penne</h3>
+              <p class="text-sm text-white/40 mt-1">Tomato • Basil • Parmesan</p>
+            </div>
+            <span class="text-orangeBrand font-semibold">$42</span>
+          </div>
+          <button class="add-cart mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-orangeBrand transition" data-name="Creamy Penne" data-price="42">Add to Order</button>
+        </article>
+
+        <article class="dish-card reveal group rounded-3xl bg-card border border-white/5 overflow-hidden p-4" data-category="dessert">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=85" alt="Dessert">
+          </div>
+          <div class="flex justify-between items-end pt-5">
+            <div>
+              <h3 class="font-display text-2xl">Golden Dessert</h3>
+              <p class="text-sm text-white/40 mt-1">Caramel • Vanilla • Berries</p>
+            </div>
+            <span class="text-orangeBrand font-semibold">$30</span>
+          </div>
+          <button class="add-cart mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-orangeBrand transition" data-name="Golden Dessert" data-price="30">Add to Order</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-24 bg-[#0b0b0b]">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
+      <div class="reveal">
+        <img class="rounded-[35px] w-full h-[550px] object-cover" src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1000&q=85" alt="Restaurant interior">
+      </div>
+      <div class="reveal">
+        <p class="text-orangeBrand uppercase tracking-[.3em] text-xs mb-5">Our story</p>
+        <h2 class="font-display text-5xl lg:text-6xl">Where Food<br><span class="text-orangeBrand">Becomes Art</span></h2>
+        <p class="text-white/50 leading-8 mt-7">
+          ANTHIRA DINING was created for people who believe dining should be more than a meal.
+          From carefully selected ingredients to beautifully plated dishes, every detail is designed
+          to create a memorable experience.
+        </p>
+        <div class="grid grid-cols-3 gap-4 mt-10">
+          <div><b class="text-3xl font-display">12+</b><p class="text-xs text-white/40 mt-1">Years</p></div>
+          <div><b class="text-3xl font-display">38</b><p class="text-xs text-white/40 mt-1">Signature dishes</p></div>
+          <div><b class="text-3xl font-display">4.9</b><p class="text-xs text-white/40 mt-1">Guest rating</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEFS -->
+  <section class="py-24 bg-black">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="reveal flex justify-between items-end mb-12">
+        <div>
+          <p class="text-orangeBrand uppercase tracking-[.3em] text-xs mb-4">The kitchen</p>
+          <h2 class="font-display text-4xl sm:text-5xl">Crafted by Experts</h2>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="reveal">
+          <div class="rounded-3xl overflow-hidden bg-card">
+            <img class="w-full h-80 object-cover" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=700&q=85" alt="Chef">
+          </div>
+          <h3 class="font-display text-2xl mt-4">James Carlow</h3>
+          <p class="text-orangeBrand text-sm">Executive Chef</p>
+        </div>
+        <div class="reveal">
+          <div class="rounded-3xl overflow-hidden bg-card">
+            <img class="w-full h-80 object-cover" src="https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?auto=format&fit=crop&w=700&q=85" alt="Chef">
+          </div>
+          <h3 class="font-display text-2xl mt-4">Elena Morin</h3>
+          <p class="text-orangeBrand text-sm">Pastry Chef</p>
+        </div>
+        <div class="reveal">
+          <div class="rounded-3xl overflow-hidden bg-card">
+            <img class="w-full h-80 object-cover" src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=700&q=85" alt="Chef">
+          </div>
+          <h3 class="font-display text-2xl mt-4">Takeshi Ito</h3>
+          <p class="text-orangeBrand text-sm">Sous Chef</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="py-24 bg-[#0b0b0b]">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="reveal text-center max-w-2xl mx-auto">
+        <p class="text-orangeBrand uppercase tracking-[.3em] text-xs mb-4">Testimonials</p>
+        <h2 class="font-display text-4xl sm:text-5xl">Praise from Our Patrons</h2>
+        <p class="text-white/40 mt-4">Real voices. Honest praise. Unforgettable moments.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+        <blockquote class="reveal bg-card border border-white/5 rounded-3xl p-7">
+          <div class="text-orangeBrand mb-5">★★★★★</div>
+          <p class="text-white/60 leading-7">“A truly unforgettable experience. From the ambience to the plating, everything was flawless.”</p>
+          <footer class="mt-6 font-semibold">Sophia M.</footer>
+          <small class="text-white/30">Food Critic</small>
+        </blockquote>
+        <blockquote class="reveal bg-card border border-white/5 rounded-3xl p-7">
+          <div class="text-orangeBrand mb-5">★★★★★</div>
+          <p class="text-white/60 leading-7">“Every bite was a masterpiece. You can taste the passion and precision in every dish.”</p>
+          <footer class="mt-6 font-semibold">Daniel L.</footer>
+          <small class="text-white/30">Culinary Enthusiast</small>
+        </blockquote>
+        <blockquote class="reveal bg-card border border-white/5 rounded-3xl p-7">
+          <div class="text-orangeBrand mb-5">★★★★★</div>
+          <p class="text-white/60 leading-7">“Exceptional service, world-class flavors, and a setting that makes you feel like royalty.”</p>
+          <footer class="mt-6 font-semibold">Ava R.</footer>
+          <small class="text-white/30">Lifestyle Blogger</small>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="py-24 bg-black">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="reveal mb-10">
+        <p class="text-orangeBrand uppercase tracking-[.3em] text-xs mb-4">Visual stories</p>
+        <h2 class="font-display text-4xl sm:text-5xl">Inside ANTHIRA DINING</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <img class="gallery-img rounded-2xl h-64 w-full object-cover cursor-pointer md:col-span-2" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85" alt="Restaurant">
+        <img class="gallery-img rounded-2xl h-64 w-full object-cover cursor-pointer" src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=700&q=85" alt="Food">
+        <img class="gallery-img rounded-2xl h-64 w-full object-cover cursor-pointer" src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=700&q=85" alt="Dining">
+        <img class="gallery-img rounded-2xl h-64 w-full object-cover cursor-pointer" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=700&q=85" alt="Restaurant">
+        <img class="gallery-img rounded-2xl h-64 w-full object-cover cursor-pointer md:col-span-2" src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=1000&q=85" alt="Food">
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA -->
+  <section id="contact" class="py-24 bg-[#0b0b0b]">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="rounded-[35px] overflow-hidden relative p-10 sm:p-16 bg-cover bg-center" style="background-image:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.8)),url('https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=85')">
+        <div class="relative max-w-2xl">
+          <p class="text-orangeBrand uppercase tracking-[.3em] text-xs mb-5">Your table awaits</p>
+          <h2 class="font-display text-5xl sm:text-6xl">Make Your Evening<br>Unforgettable</h2>
+          <p class="text-white/60 mt-5">Reserve your table and experience ANTHIRA DINING.</p>
+          <button onclick="openReservation()" class="mt-8 bg-orangeBrand hover:bg-orange-500 px-7 py-4 rounded-full font-semibold transition">Reserve Your Table ↗</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 bg-black">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12 grid md:grid-cols-4 gap-10">
+      <div>
+        <h3 class="font-display text-2xl">ANTHIRA DINING</h3>
+        <p class="text-white/40 text-sm leading-6 mt-4">Luxury dining, unforgettable moments and food crafted with passion.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Explore</h4>
+        <div class="space-y-2 text-sm text-white/40">
+          <a class="block hover:text-orangeBrand" href="#menu">Menu</a>
+          <a class="block hover:text-orangeBrand" href="#about">About</a>
+          <a class="block hover:text-orangeBrand" href="#gallery">Gallery</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Contact</h4>
+        <p class="text-sm text-white/40">24 Victoria Island<br>Lagos, Nigeria<br>+234 800 000 0000</p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Opening Hours</h4>
+        <p class="text-sm text-white/40">Mon — Thu: 11:00 — 22:00<br>Fri — Sun: 11:00 — 00:00</p>
+      </div>
+    </div>
+    <div class="border-t border-white/10 py-6 text-center text-xs text-white/30">© 2026 ANTHIRA DINING. All rights reserved.</div>
+  </footer>
+
+  <!-- RESERVATION MODAL -->
+  <div id="reservationModal" class="modal fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white text-black w-full max-w-lg rounded-3xl p-7 relative">
+      <button onclick="closeReservation()" class="absolute right-5 top-5 text-2xl">×</button>
+      <p class="text-orangeBrand uppercase tracking-widest text-xs font-semibold">Reservation</p>
+      <h2 class="font-display text-4xl mt-2">Reserve Your Table</h2>
+
+      <form id="reservationForm" class="space-y-4 mt-7">
+        <div>
+          <label class="text-sm font-medium">Name</label>
+          <input required class="mt-2 w-full border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-orangeBrand" placeholder="Your name">
+        </div>
+        <div>
+          <label class="text-sm font-medium">Phone</label>
+          <input required class="mt-2 w-full border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-orangeBrand" placeholder="+234...">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-medium">Date</label>
+            <input required type="date" class="mt-2 w-full border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-orangeBrand">
+          </div>
+          <div>
+            <label class="text-sm font-medium">Time</label>
+            <input required type="time" class="mt-2 w-full border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-orangeBrand">
+          </div>
+        </div>
+        <div>
+          <label class="text-sm font-medium">Guests</label>
+          <select class="mt-2 w-full border border-black/10 rounded-xl px-4 py-3">
+            <option>1 Guest</option><option selected>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5+ Guests</option>
+          </select>
+        </div>
+        <button class="w-full bg-orangeBrand text-white py-4 rounded-xl font-semibold hover:bg-orange-600 transition">Confirm Reservation</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- GALLERY MODAL -->
+  <div id="galleryModal" class="modal fixed inset-0 z-[110] bg-black/95 flex items-center justify-center p-5">
+    <button onclick="closeGallery()" class="absolute right-6 top-5 text-4xl">×</button>
+    <img id="galleryPreview" class="max-w-5xl max-h-[85vh] rounded-2xl object-contain" alt="Gallery preview">
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav aria-label="Mobile navigation" class="mobile-bottom-nav fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 md:hidden">
+    <a href="#home" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#menu" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M17 3v18m0-18c2 2 3 5 3 8h-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Menu</span>
+    </a>
+    <button type="button" onclick="openReservation()" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-orangeBrand hover:text-orange-400 focus-visible:text-orange-400">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="M4 7h16l-1 14H5L4 7Zm4 0a4 4 0 0 1 8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Order</span>
+    </button>
+    <a href="#about" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0" stroke-linecap="round"/></svg>
+      <span>About</span>
+    </a>
+    <a href="#contact" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Contact</span>
+    </a>
+  </nav>
+
+  <!-- CART -->
+  <button id="cartButton" class="fixed right-5 bottom-5 z-40 bg-orangeBrand w-14 h-14 rounded-full shadow-xl text-xl">
+    🛒<span id="cartCount" class="absolute -top-1 -right-1 bg-white text-black text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+  </button>
+
+  <script>
+    const businessSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Restaurant',
+      '@id': 'https://anthira.com/#restaurant',
+      url: 'https://anthira.com/',
+      name: 'ANTHIRA DINING',
+      description: document.querySelector('meta[name="description"]').content,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Victoria Island',
+        addressRegion: 'Lagos',
+        addressCountry: 'NG'
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+          opens: '11:00',
+          closes: '22:00'
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Friday', 'Saturday', 'Sunday'],
+          opens: '11:00',
+          closes: '00:00'
+        }
+      ]
+    };
+    const structuredData = document.createElement('script');
+    structuredData.type = 'application/ld+json';
+    structuredData.textContent = JSON.stringify(businessSchema);
+    document.head.appendChild(structuredData);
+
+    // Navbar
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 30);
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: .12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Menu filters
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const dishes = document.querySelectorAll('.dish-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.classList.remove('active', 'bg-orangeBrand', 'border-orangeBrand');
+          b.classList.add('border-white/15');
+        });
+
+        btn.classList.add('active', 'bg-orangeBrand', 'border-orangeBrand');
+        const filter = btn.dataset.filter;
+
+        dishes.forEach(dish => {
+          dish.style.display = filter === 'all' || dish.dataset.category === filter ? '' : 'none';
+        });
+      });
+    });
+
+    // Reservation modal
+    const reservationModal = document.getElementById('reservationModal');
+
+    function openReservation() {
+      reservationModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReservation() {
+      reservationModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('reservationForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Reservation request received! Connect this form to your backend or WhatsApp to make it live.');
+      closeReservation();
+    });
+
+    // Gallery modal
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryPreview = document.getElementById('galleryPreview');
+
+    document.querySelectorAll('.gallery-img').forEach(img => {
+      img.addEventListener('click', () => {
+        galleryPreview.src = img.src;
+        galleryModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeGallery() {
+      galleryModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Cart
+    let cart = JSON.parse(localStorage.getItem('savorelleCart')) || [];
+    const cartCount = document.getElementById('cartCount');
+
+    function updateCart() {
+      const totalItems = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+      cartCount.textContent = totalItems;
+      localStorage.setItem('savorelleCart', JSON.stringify(cart));
+    }
+
+    document.querySelectorAll('.add-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newItem = {
+          name: btn.dataset.name,
+          price: Number(btn.dataset.price),
+          quantity: 1
+        };
+
+        const existingItem = cart.find(item => item.name === newItem.name);
+        if (existingItem) {
+          existingItem.quantity = (Number(existingItem.quantity) || 1) + 1;
+        } else {
+          cart.push(newItem);
+        }
+
+        updateCart();
+
+        const original = btn.textContent;
+        btn.textContent = '✓ Added to Order';
+        btn.classList.add('bg-orangeBrand');
+
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('bg-orangeBrand');
+        }, 1200);
+      });
+    });
+
+    document.getElementById('cartButton').addEventListener('click', () => {
+      window.location.href = 'cart.html';
+    });
+
+    updateCart();
+
+    // Close modals by clicking background
+    reservationModal.addEventListener('click', e => {
+      if (e.target === reservationModal) closeReservation();
+    });
+
+    galleryModal.addEventListener('click', e => {
+      if (e.target === galleryModal) closeGallery();
+    });
+  </script>
+</body>
+</html>

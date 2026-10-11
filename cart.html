@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANTHIRA DINING | Shopping Cart</title>
+  <meta name="robots" content="noindex, follow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            orangeBrand: '#f47b16',
+            dark: '#070707',
+            card: '#151515'
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { background: #070707; }
+    .texture {
+      background-color: #070707;
+      background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 4px 4px;
+    }
+    @media (max-width: 767px) {
+      body { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+      .mobile-bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+        background: rgba(7,7,7,.96);
+        backdrop-filter: blur(14px);
+        border-top: 1px solid rgba(255,255,255,.1);
+      }
+    }
+  </style>
+</head>
+<body class="text-white font-sans texture min-h-screen">
+  <header class="border-b border-white/10 bg-black/70 backdrop-blur-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+      <a href="food-site.html" class="flex items-center gap-2 font-display text-1xl tracking-wide">
+        <img src="34.jpeg" alt="" class="h-10 w-10 object-contain">
+        <span>ANTHIRA DINING</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm text-white/70">
+        <a href="food-site.html#home" class="hover:text-orangeBrand transition">Home</a>
+        <a href="food-site.html#menu" class="hover:text-orangeBrand transition">Menu</a>
+        <a href="food-site.html#about" class="hover:text-orangeBrand transition">About</a>
+        <a href="food-site.html#gallery" class="hover:text-orangeBrand transition">Gallery</a>
+        <a href="food-site.html#contact" class="hover:text-orangeBrand transition">Contact</a>
+      </nav>
+
+      <a href="food-site.html#menu" class="bg-orangeBrand text-center lg:px-4 lg:py-2  md:px-4 md:py-2 rounded-full text-sm font-semibold hover:bg-orange-500 transition">Continue Shopping</a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-5 py-12 lg:py-20">
+    <div class="mb-8">
+      <p class="text-orangeBrand uppercase tracking-[.32em] text-xs font-semibold">Your Order</p>
+      <h1 class="font-display text-4xl sm:text-5xl mt-3">Shopping Cart</h1>
+      <p class="text-white/55 mt-2">Review your selected dishes before checkout.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.4fr_0.8fr] gap-8">
+      <section class="rounded-[28px] border border-white/10 bg-[#101010] p-5 sm:p-7">
+        <div class="flex items-center justify-between border-b border-white/10 pb-5 mb-5">
+          <h2 class="text-xl font-bold">Your Items</h2>
+          <span id="itemCount" class="text-sm text-white/55">0 items</span>
+        </div>
+
+        <div id="cartItems" class="space-y-5"></div>
+
+        <div id="emptyCart" class="hidden text-center py-16">
+          <div class="text-5xl mb-4">🛒</div>
+          <h3 class="font-display text-3xl mb-2">Your cart is empty</h3>
+          <p class="text-white/55 mb-6">Add a few signature dishes to begin your experience.</p>
+          <a href="food-site.html#menu" class="inline-block bg-orangeBrand px-6 py-3 rounded-full font-semibold hover:bg-orange-500 transition">Browse Menu</a>
+        </div>
+      </section>
+
+      <aside class="rounded-[28px] border border-white/10 bg-[#101010] p-6 h-fit lg:sticky lg:top-24">
+        <h2 class="font-display text-3xl mb-6">Order Summary</h2>
+
+        <div class="space-y-4 text-sm">
+          <div class="flex justify-between text-white/65">
+            <span>Subtotal</span>
+            <span id="subtotal">$0.00</span>
+          </div>
+          <div class="flex justify-between text-white/65">
+            <span>Delivery</span>
+            <span>$0.00</span>
+          </div>
+          <div class="flex justify-between text-white/65">
+            <span>Tax</span>
+            <span id="tax">$0.00</span>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 my-5"></div>
+
+        <div class="flex justify-between items-center text-lg font-semibold">
+          <span>Total</span>
+          <span id="total" class="text-orangeBrand">$0.00</span>
+        </div>
+        <button id="checkoutBtn" class="w-full mt-7 bg-orangeBrand text-white py-3.5 rounded-full font-semibold hover:bg-orange-500 transition">Checkout</button>
+    </aside>
+    </div>
+  </main>
+
+  <nav aria-label="Mobile navigation" class="mobile-bottom-nav fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 md:hidden">
+    <a href="food-site.html#home" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="food-site.html#menu" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M17 3v18m0-18c2 2 3 5 3 8h-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Menu</span>
+    </a>
+    <a href="cart.html" aria-current="page" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-orangeBrand hover:text-orange-400 focus-visible:text-orange-400">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="M4 7h16l-1 14H5L4 7Zm4 0a4 4 0 0 1 8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Cart</span>
+    </a>
+    <a href="food-site.html#about" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0" stroke-linecap="round"/></svg>
+      <span>About</span>
+    </a>
+    <a href="food-site.html#contact" class="flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] text-white/70 hover:text-orangeBrand focus-visible:text-orangeBrand">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Contact</span>
+    </a>
+  </nav>
+
+  <script>
+    const cartKey = 'savorelleCart';
+
+    function getCart() {
+      try {
+        return JSON.parse(localStorage.getItem(cartKey)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+    }
+
+    function money(value) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(value);
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const cartItems = document.getElementById('cartItems');
+      const emptyCart = document.getElementById('emptyCart');
+      const itemCount = document.getElementById('itemCount');
+      const subtotalEl = document.getElementById('subtotal');
+      const taxEl = document.getElementById('tax');
+      const totalEl = document.getElementById('total');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+
+      itemCount.textContent = `${cart.length} ${cart.length === 1 ? 'item' : 'items'}`;
+
+      if (!cart.length) {
+        cartItems.innerHTML = '';
+        emptyCart.classList.remove('hidden');
+        subtotalEl.textContent = '$0.00';
+        taxEl.textContent = '$0.00';
+        totalEl.textContent = '$0.00';
+        checkoutBtn.disabled = true;
+        checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        return;
+      }
+
+      emptyCart.classList.add('hidden');
+      checkoutBtn.disabled = false;
+      checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+      cartItems.innerHTML = cart.map((item, index) => `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/10 rounded-2xl p-4 bg-black/30">
+          <div>
+            <h3 class="font-display text-2xl">${item.name}</h3>
+            <p class="text-white/45 text-sm mt-1">${money(item.price)}</p>
+          </div>
+          <div class="flex items-center justify-between sm:justify-end gap-5 w-full sm:w-auto">
+            <span class="text-orangeBrand font-semibold text-lg">${money(item.price)}</span>
+            <button class="remove-item bg-white/5 hover:bg-red-500/20 border border-white/10 px-3 py-2 rounded-full text-xs text-white/80 transition" data-index="${index}">Remove</button>
+          </div>
+        </div>
+      `).join('');
+
+      const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
+
+      subtotalEl.textContent = money(subtotal);
+      taxEl.textContent = money(tax);
+      totalEl.textContent = money(total);
+    }
+
+    document.getElementById('cartItems').addEventListener('click', (event) => {
+      const removeBtn = event.target.closest('.remove-item');
+      if (!removeBtn) return;
+
+      const cart = getCart();
+      const index = Number(removeBtn.dataset.index);
+      cart.splice(index, 1);
+      saveCart(cart);
+      renderCart();
+    });
+
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      const cart = getCart();
+      if (!cart.length) {
+        alert('Your cart is empty.');
+        return;
+      }
+
+      localStorage.removeItem(cartKey);
+      alert('Checkout successful! Thank you for your order.');
+      window.location.href = 'food-site.html';
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
