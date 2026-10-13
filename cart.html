@@ -172,7 +172,8 @@
       const totalEl = document.getElementById('total');
       const checkoutBtn = document.getElementById('checkoutBtn');
 
-      itemCount.textContent = `${cart.length} ${cart.length === 1 ? 'item' : 'items'}`;
+      const totalItems = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+      itemCount.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
 
       if (!cart.length) {
         cartItems.innerHTML = '';
@@ -191,18 +192,26 @@
 
       cartItems.innerHTML = cart.map((item, index) => `
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/10 rounded-2xl p-4 bg-black/30">
-          <div>
-            <h3 class="font-display text-2xl">${item.name}</h3>
-            <p class="text-white/45 text-sm mt-1">${money(item.price)}</p>
+          <div class="flex items-center gap-4">
+            ${item.image ? `<img src="${item.image}" alt="${item.name}" class="h-20 w-20 rounded-xl object-cover shrink-0">` : ''}
+            <div>
+              <h3 class="font-display text-2xl">${item.name}</h3>
+              <p class="text-white/45 text-sm mt-1">${money(item.price)}</p>
+            </div>
           </div>
           <div class="flex items-center justify-between sm:justify-end gap-5 w-full sm:w-auto">
-            <span class="text-orangeBrand font-semibold text-lg">${money(item.price)}</span>
+            <div class="flex items-center gap-3">
+              <button class="quantity-btn h-8 w-8 rounded-full border border-white/15 text-lg hover:border-orangeBrand transition" data-action="decrease" data-index="${index}" aria-label="Decrease quantity of ${item.name}">−</button>
+              <span class="min-w-5 text-center" aria-label="Quantity">${Number(item.quantity) || 1}</span>
+              <button class="quantity-btn h-8 w-8 rounded-full border border-white/15 text-lg hover:border-orangeBrand transition" data-action="increase" data-index="${index}" aria-label="Increase quantity of ${item.name}">+</button>
+            </div>
+            <span class="text-orangeBrand font-semibold text-lg">${money(item.price * (Number(item.quantity) || 1))}</span>
             <button class="remove-item bg-white/5 hover:bg-red-500/20 border border-white/10 px-3 py-2 rounded-full text-xs text-white/80 transition" data-index="${index}">Remove</button>
           </div>
         </div>
       `).join('');
 
-      const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+      const subtotal = cart.reduce((sum, item) => sum + item.price * (Number(item.quantity) || 1), 0);
       const tax = subtotal * 0.08;
       const total = subtotal + tax;
 
@@ -212,12 +221,30 @@
     }
 
     document.getElementById('cartItems').addEventListener('click', (event) => {
-      const removeBtn = event.target.closest('.remove-item');
-      if (!removeBtn) return;
-
       const cart = getCart();
-      const index = Number(removeBtn.dataset.index);
-      cart.splice(index, 1);
+      const button = event.target.closest('button');
+      if (!button) return;
+
+      const index = Number(button.dataset.index);
+      if (button.classList.contains('remove-item')) {
+        cart.splice(index, 1);
+      } else if (button.classList.contains('quantity-btn')) {
+        if (button.dataset.action === 'increase') {
+          cart[index].quantity = (Number(cart[index].quantity) || 1) + 1;
+        } else if (button.dataset.action === 'decrease') {
+          const quantity = (Number(cart[index].quantity) || 1) - 1;
+          if (quantity <= 0) {
+            cart.splice(index, 1);
+          } else {
+            cart[index].quantity = quantity;
+          }
+        } else {
+          return;
+        }
+      } else {
+        return;
+      }
+
       saveCart(cart);
       renderCart();
     });
